@@ -94,7 +94,77 @@ class LiveAPI(object):
         response = self.request(url, params, method='get')
         return response
 
+    def room_update(self, roomid, userid, name, desc, templatetype, authtype,
+            publisherpass, assistantpass, playpass=None, checkurl=None,
+            barrage=0, openlowdelaymode=0, showusercount=1,
+            warmvideoid='', livestarttime='', playerbackgroundhint='', manuallyrecordmode=0,
+            clientdocpermissions=0, repeatedloginsetting=0, maxaudiencenum=0,
+            documentdisplaymode=1, openlivecountdown=0, showlectueronlinenum=1,
+            showassistonlinenum=1):
+        '''
+        编辑直播间
+        http://api.csslcloud.net/api/room/update
+        roomid  直播间id
+        userid  CC账户ID
+        name    直播间名称
+        desc    直播间描述
+        templatetype    直播模板类型，请求模板信息接口可获得模板类型的详细信息。
+        authtype    验证方式，0：接口验证，需要填写下面的checkurl；1：密码验证，需要填写下面的playpass；2：免密码验证
+        publisherpass   推流端密码，即讲师密码
+        assistantpass   助教端密码
+        playpass    播放端密码  可选
+        checkurl    验证地址    可选
+        barrage 是否开启弹幕。0：不开启；1：开启
+        openlowdelaymode    开启直播低延时模式。0为关闭；1为开启    可选
+        showusercount   在页面显示当前在线人数，0表示不显示；1表示显示  可选，默认显示当前人数，模板一暂不支持此设置
+        warmvideoid 插播暖场视频，填写同一账号下云点播视频vid   可选，默认关闭；参数值为空，表示关闭
+        livestarttime   直播开始时间；格式；yyyy-MM-dd HH:mm:ss 可选
+        playerbackgroundhint    播放器提示语。未直播时播放器将显示该提示语  可选，最多15个字符
+        manuallyrecordmode  手动录制模式。0：关闭；1：开启  可选，默认关闭
+        clientdocpermissions    讲师文档权限。0：关闭；1：开启  可选，默认开启
+        repeatedloginsetting    重复登录设置；0：允许后进入者登录;1:禁止后进入者登录，对讲师端和观看端生效  可选，默认0
+        maxaudiencenum  直播间并发人数上限  可选，默认为0，表示不做限制
+        documentdisplaymode 文档显示模式。1：适合窗口;2:适合宽度    可选，适合窗口
+        openlivecountdown   开启倒计时功能。0：不开启；1：开启  可选，默认不开启
+        showlectueronlinenum    讲师端显示在线人数。0：不显示；1：显示  可选，默认显示
+        showassistonlinenum 助教主持人端显示在线人数。0：不显示；1：显示    可选，默认显示
+        '''
+        url = self.get_url('room/update')
+        authtype = constants.LiveAuthType(authtype).value
+        templatetype = constants.LiveTemplateType(templatetype).value
+        params = {
+            'roomid': roomid, 'userid': userid, 'name': name, 'desc': desc, 'templatetype': templatetype,
+            'authtype': authtype, 'publisherpass': publisherpass, 'assistantpass': assistantpass,
+            'playpass': playpass, 'checkurl': checkurl, 'barrage': barrage,
+            'openlowdelaymode': openlowdelaymode, 'showusercount': showusercount,
+            'warmvideoid': warmvideoid, 'livestarttime': livestarttime,
+            'playerbackgroundhint': playerbackgroundhint, 'manuallyrecordmode': manuallyrecordmode,
+            'clientdocpermissions': clientdocpermissions, 'repeatedloginsetting': repeatedloginsetting,
+            'maxaudiencenum': maxaudiencenum, 'documentdisplaymode': documentdisplaymode,
+            'openlivecountdown': openlivecountdown, 'showlectueronlinenum': showlectueronlinenum,
+            'showassistonlinenum': showassistonlinenum
+        }
+        response = self.request(url, params, method='get')
+        return response
+
+    def room_close(self, userid, roomid):
+        '''
+        关闭直播间
+        http://api.csslcloud.net/api/room/close
+        roomid    直播间id
+        userid    CC账户ID
+        '''
+        url = self.get_url('room/close')
+        params = {'userid': userid, 'roomid': roomid}
+        response = self.request(url, params, method='get')
+        return response
+
     def viewtemplate_info(self, userid):
+        '''
+        获取直播间模板信息
+        http://api.csslcloud.net/api/viewtemplate/info
+        userid   CC账户ID
+        '''
         url = self.get_url('viewtemplate/info')
         params = {'userid': userid}
         response = self.request(url, params, method='get')

@@ -12,7 +12,10 @@ from ccsdk.live import LiveAPI
 
 def room_create_nopassword():
     '''
-        response: {u'result': u'OK', u'room': {u'atlasRoomId': u'', u'id': u'06B80689C1653A459C33DC5901307461'}}
+    response: {u'result': u'OK', u'room': {u'atlasRoomId': u'', u'id': u'06B80689C1653A459C33DC5901307461'}}
+    # 有时候会有这种返回
+    {u'result': u'OK', u'room': {u'atlasRoomId': u'', u'id': u'C3A806559DE44DB19C33DC5901307461',
+     u'publishUrl': u'rtmp://119.23.200.43/origin/C3A806559DE44DB19C33DC5901307461?token=DVD2sV74'}}
     '''
     live_api = LiveAPI(APIKEY)
     userid = USERID
@@ -44,6 +47,30 @@ def room_create_password():
     response = live_api.room_create(
         userid, name, desc, templatetype, authtype, publisherpass, assistantpass
     )
+    return response
+
+def room_update(roomid):
+    '''
+    {u'result': u'OK'}
+    '''
+    live_api = LiveAPI(APIKEY)
+    userid = USERID
+    name = 'sdk测试修改创建直播间name 无密码'
+    desc = 'sdk测试创建直播间desc111'
+    templatetype = constants.LiveTemplateType.video_doc_chat_qa.value
+    authtype = constants.LiveAuthType.no_password.value
+    publisherpass = 'tcctest1'
+    assistantpass = 'acctest1'
+    response = live_api.room_update(
+        roomid, userid, name, desc, templatetype, authtype, publisherpass, assistantpass
+    )
+    return response
+
+
+def room_close(roomid):
+    live_api = LiveAPI(APIKEY)
+    userid = USERID
+    response = live_api.room_close(userid, roomid)
     return response
 
 
