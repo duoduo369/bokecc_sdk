@@ -3,8 +3,8 @@
 from os.path import join, dirname
 from setuptools import setup
 
-PACKAGE_NAME = ''
-PACKAGE_PATH = ''
+PACKAGE_NAME = 'ccsdk'
+PACKAGE_PATH = 'ccsdk'
 
 version = __import__(PACKAGE_PATH).__version__
 
@@ -27,7 +27,7 @@ setup(name=PACKAGE_NAME,
       author_email='duoduo3369@gmail.com',
       description= SHORT_DESCRIPTION,
       license='MIT',
-      keywords='',
+      keywords='ccsdk',
       url='',
       download_url='',
       packages=[''],
