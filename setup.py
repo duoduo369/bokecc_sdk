@@ -8,7 +8,7 @@ PACKAGE_PATH = 'ccsdk'
 
 version = __import__(PACKAGE_PATH).__version__
 
-SHORT_DESCRIPTION = ''''''
+SHORT_DESCRIPTION = '''SDK for bokecc.'''
 
 LONG_DESCRIPTION = ''''''
 
@@ -27,12 +27,12 @@ setup(name=PACKAGE_NAME,
       author_email='duoduo3369@gmail.com',
       description= SHORT_DESCRIPTION,
       license='MIT',
-      keywords='ccsdk',
-      url='',
-      download_url='',
+      keywords='ccsdk,bokecc',
+      url='https://github.com/duoduo369/ccsdk',
+      download_url='https://github.com/duoduo369/ccsdk/archive/0.1.0.zip',
       packages=[''],
       long_description=long_description(),
-      install_requires=[],
+      install_requires=['requests', 'arrow'],
       classifiers=[
                    'Development Status :: 4 - Beta',
                    'Topic :: Internet',

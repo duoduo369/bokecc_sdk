@@ -17,3 +17,11 @@ class LiveTemplateType(IntEnum):
     video_doc_chat = 4 # 视频，文档，聊天 4
     video_doc_chat_qa = 5 # 视频，文档，聊天，问答 5
     video_qa = 6 # 视频，问答 6
+
+
+class LiveAutoLoginType(IntEnum):
+    user = 1
+    assistant = 2
+    manage = 3
+    lecturer = 4
+    no_password = 2
