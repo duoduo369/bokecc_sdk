@@ -1,4 +1,4 @@
-ccsdk
+bokecc_sdk
 ===
 SDK for bokecc.
 

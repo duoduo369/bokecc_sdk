@@ -6,8 +6,8 @@
 '''
 from __secret import USERID, APIKEY
 
-from ccsdk import constants
-from ccsdk.live import LiveAPI
+from bokecc_sdk import constants
+from bokecc_sdk.live import LiveAPI
 
 
 def room_create_nopassword():

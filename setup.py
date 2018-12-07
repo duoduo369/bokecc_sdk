@@ -3,8 +3,8 @@
 from os.path import join, dirname
 from setuptools import setup
 
-PACKAGE_NAME = 'ccsdk'
-PACKAGE_PATH = 'ccsdk'
+PACKAGE_NAME = 'bokecc_sdk'
+PACKAGE_PATH = 'bokecc_sdk'
 
 version = __import__(PACKAGE_PATH).__version__
 
@@ -27,9 +27,9 @@ setup(name=PACKAGE_NAME,
       author_email='duoduo3369@gmail.com',
       description= SHORT_DESCRIPTION,
       license='MIT',
-      keywords='ccsdk,bokecc',
-      url='https://github.com/duoduo369/ccsdk',
-      download_url='https://github.com/duoduo369/ccsdk/archive/0.1.0.zip',
+      keywords='ccsdk,bokecc,bokecc sdk',
+      url='https://github.com/duoduo369/bokecc_sdk',
+      download_url='https://github.com/duoduo369/bokecc_sdk/archive/0.1.0.zip',
       packages=[''],
       long_description=long_description(),
       install_requires=['requests', 'arrow'],
