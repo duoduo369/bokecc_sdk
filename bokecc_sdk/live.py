@@ -407,7 +407,7 @@ class LiveAPI(APIMixin):
         response = self.request(url, params, method='get')
         return response
 
-    def get_auto_login_url(self, url, name, token, login_type=constants.LiveAutoLoginType.user.value):
+    def get_auto_login_url(self, url, name, token, login_type):
         '''
         url 为 room_code 中拿到的各个url,
         观众直播、回放，助教，主持人都为viewername, viewertoken

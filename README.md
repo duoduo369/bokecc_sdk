@@ -4,12 +4,19 @@ SDK for bokecc.
 
 live.py
 ---
-cc 直播类接口
+cc 云直播类接口
 https://doc.bokecc.com/live/dev/liveapi/
 
-TODO: 聊天、抽奖、签到等非视频信息
-TODO: 提供回调类接口支持
+classroom.py
+---
+cc 云课堂类接口
+https://doc.bokecc.com/class/developer/classapi/
+
+todo
+---
+TODO: live 聊天、抽奖、签到等非视频信息
 TODO: 完成点播类接口
+TODO: 完成云课堂聊天等接口
 
 usage
 ---

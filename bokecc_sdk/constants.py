@@ -24,7 +24,15 @@ class LiveAutoLoginType(IntEnum):
     assistant = 2
     manage = 3
     lecturer = 4
-    no_password = 2
+
+
+class ClassRoomAutoLoginType(IntEnum):
+    presenter = 1  # 教师
+    assistant = 2  # 助教
+    talker = 3  # 互动
+    audience = 4  # 旁听
+    inspector = 5  # 隐身
+    record = 6  # 回放
 
 
 class ClassRoomRoomType(IntEnum):

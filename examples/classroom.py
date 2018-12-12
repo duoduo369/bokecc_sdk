@@ -128,3 +128,110 @@ def room_list(name=None, status=None, page=1, lines=50, roomid=None):
         userid, name=name, status=status, page=page, lines=lines, roomid=roomid
     )
     return response
+
+
+def room_room_detail(roomid):
+    '''
+    获取房间信息
+    '''
+    classroom_api = ClassRoomAPI(APIKEY)
+    userid = USERID
+    response = classroom_api.room_room_detail(userid, roomid)
+    return response
+
+
+def room_link(roomid):
+    '''
+    获取房间登录链接
+    response
+    {u'data': {u'assist_url': u'https://class.csslcloud.net/index/assistant/?roomid=C9CBAB7F53A201249C33DC5901307461&userid=BC36C6119CAB4A42',
+      u'audience_url': u'https://view.csslcloud.net/api/view/index?roomid=C9CBAB7F53A201249C33DC5901307461&userid=BC36C6119CAB4A42',
+      u'inspector_url': u'https://class.csslcloud.net/index/inspector/?roomid=C9CBAB7F53A201249C33DC5901307461&userid=BC36C6119CAB4A42',
+      u'presenter_url': u'https://class.csslcloud.net/index/presenter/?roomid=C9CBAB7F53A201249C33DC5901307461&userid=BC36C6119CAB4A42',
+      u'talker_url': u'https://class.csslcloud.net/index/talker/?roomid=C9CBAB7F53A201249C33DC5901307461&userid=BC36C6119CAB4A42'},
+     u'result': u'OK'}
+    '''
+    classroom_api = ClassRoomAPI(APIKEY)
+    userid = USERID
+    response = classroom_api.room_link(userid, roomid)
+    return response
+
+
+def room_set_single(roomid, status):
+    '''
+    获取房间信息
+    '''
+    classroom_api = ClassRoomAPI(APIKEY)
+    userid = USERID
+    response = classroom_api.room_set_single(userid, roomid, status)
+    return response
+
+
+def room_user_list(roomid):
+    '''
+    获取当前房间人员列表
+    '''
+    classroom_api = ClassRoomAPI(APIKEY)
+    userid = USERID
+    response = classroom_api.room_user_list(userid, roomid)
+    return response
+
+
+def room_live_stat(roomid):
+    '''
+    查询直播状态
+    '''
+    classroom_api = ClassRoomAPI(APIKEY)
+    userid = USERID
+    response = classroom_api.room_live_stat(userid, roomid)
+    return response
+
+
+def get_auto_login_url(roomid):
+    '''获取直播间免密码登录url'''
+    classroom_api = ClassRoomAPI(APIKEY)
+    userid = USERID
+    response = classroom_api.room_link(userid, roomid)['data']
+    # 教师
+    presenter_login_url = response['presenter_url']
+    # 助教
+    assist_login_url = response['assist_url']
+    # 旁听
+    audience_login_url = response['audience_url']
+    # 互动
+    talker_login_url = response['talker_url']
+    # 隐身者
+    inspector_login_url = response['inspector_url']
+
+    name = 'test'
+
+    publisherpass = 'tcctest'
+    assist_pass = 'acctest'
+    audience_pass = 'aucctest'
+    talker_pass = 'tlcctest'
+    inspector_pass = 'icctest'
+
+    presenter_auto_login_url = classroom_api.get_auto_login_url(
+        presenter_login_url, name, publisherpass, login_type=constants.ClassRoomAutoLoginType.presenter.value
+    )
+    assist_auto_login_url = classroom_api.get_auto_login_url(
+        assist_login_url, name, assist_pass, login_type=constants.ClassRoomAutoLoginType.assistant.value
+    )
+    audience_auto_url = classroom_api.get_auto_login_url(
+        audience_login_url, name, audience_pass, login_type=constants.ClassRoomAutoLoginType.audience.value
+    )
+    talker_auto_login_url = classroom_api.get_auto_login_url(
+        talker_login_url, name, talker_pass, login_type=constants.ClassRoomAutoLoginType.talker.value
+    )
+    inspector_auto_login_url = classroom_api.get_auto_login_url(
+        inspector_login_url, name, inspector_pass, login_type=constants.ClassRoomAutoLoginType.inspector.value
+    )
+
+    data = {
+        'presenter_auto_login_url': presenter_auto_login_url,
+        'assist_auto_login_url': assist_auto_login_url,
+        'audience_auto_url': audience_auto_url,
+        'talker_auto_login_url': talker_auto_login_url,
+        'inspector_auto_login_url': inspector_auto_login_url,
+    }
+    return data
