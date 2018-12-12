@@ -25,3 +25,28 @@ class LiveAutoLoginType(IntEnum):
     manage = 3
     lecturer = 4
     no_password = 2
+
+
+class ClassRoomRoomType(IntEnum):
+    chat = 1
+    small_class = 2
+
+
+class ClassRoomTemplateType(IntEnum):
+    talk = 1 # 讲课模式
+    main = 2 # 主视角模式
+    tile = 4 # 平铺模式
+    # one_to_one = 8 # 1v1模式, 使用这个会500
+    two_teacher = 16 # 双师模式
+
+
+class ClassRoomMergeType(IntEnum):
+    main = 1 # 讲课模式
+    tile = 2 # 主视角模式
+    cover = 3 # 平铺模式
+
+
+class ClassRoomClassType(IntEnum):
+    call = 1 # 点名
+    free = 2 # 自由
+    auto = 3 # 自动
