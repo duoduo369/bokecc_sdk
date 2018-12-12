@@ -231,7 +231,7 @@ def live_info(roomid, pagenum=50, pageindex=1, starttime='', endtime=''):
 
 def record_info(roomid, pagenum=50, pageindex=1, starttime='', endtime=''):
     '''
-    获取直播列表
+    获取回放列表
     response
     {u'count': 4,
      u'pageIndex': 1,

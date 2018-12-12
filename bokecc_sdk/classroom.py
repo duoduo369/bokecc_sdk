@@ -226,3 +226,85 @@ class ClassRoomAPI(APIMixin):
             params['roomid'] = roomid
         response = self.request(url, params, method='get')
         return response
+
+    def room_room_detail(self, userid, roomid):
+        '''
+        获取房间信息
+        https://ccapi.csslcloud.net/api/room/room_detail
+        userid  字符串  用户账号ID  必须
+        roomid  字符串  房间ID  必须
+        '''
+        url = self.get_url('room/room_detail')
+        params = {'userid': userid, 'roomid': roomid}
+        response = self.request(url, params, method='get')
+        return response
+
+
+    def room_link(self, userid, roomid):
+        '''
+        获取房间登录链接
+        https://ccapi.csslcloud.net/api/v1/room/link
+        userid  字符串  用户账号ID  必须
+        roomid  字符串  房间ID  必须
+        '''
+        url = self.get_url('v1/room/link')
+        params = {'userid': userid, 'roomid': roomid}
+        response = self.request(url, params, method='get')
+        return response
+
+    def room_set_single(self, userid, roomid, status):
+        '''
+        切换合流布局模式
+        https://ccapi.csslcloud.net/api/room/set_single
+        userid  字符串  用户账号ID  必须
+        roomid  字符串  房间ID  必须
+        status  整型    状态 1:主视角 2:平铺    必须
+        '''
+        url = self.get_url('room/set_single')
+        params = {'userid': userid, 'roomid': roomid, 'status': status}
+        response = self.request(url, params, method='get')
+        return response
+
+    def room_user_list(self, userid, roomid):
+        '''
+        获取当前房间人员列表
+        https://ccapi.csslcloud.net/api/v1/room/user/list
+        userid  字符串  用户账号ID  必须
+        roomid  字符串  房间ID  必须
+        '''
+        url = self.get_url('v1/room/user/list')
+        params = {'userid': userid, 'roomid': roomid}
+        response = self.request(url, params, method='get')
+        return response
+
+    def room_live_stat(self, userid, roomid):
+        '''
+        查询直播状态
+        https://ccapi.csslcloud.net/api/v1/room/live/stat
+        roomid  字符串  房间ID  必须
+        '''
+        url = self.get_url('v1/room/live/stat')
+        params = {'userid': userid, 'roomid': roomid}
+        response = self.request(url, params, method='get')
+        return response
+
+    def get_auto_login_url(self, url, name, token, login_type):
+        '''
+        url 为 room_link 中拿到的各个url,
+        教师端:
+            https://class.csslcloud.net/index/presenter/?roomid=FC3548C1133061D09C33DC5901307461&userid=E9607DAFB705A798&username=XXX&password=XXX&autoLogin=true
+        互动者:
+            https://class.csslcloud.net/index/talker/?roomid=FC3548C1133061D09C33DC5901307461&userid=E9607DAFB705A798&username=XXX&password=XXX&autoLogin=true
+        旁听端:
+            http://view.csslcloud.net/api/view/index?roomid=xxx&userid=xxx&autoLogin=true&viewername=11&viewertoken=11
+        回放端:
+            http://view.csslcloud.net/api/view/callback/login?liveid=xxx&roomid=xxx&userid=xxx&autoLogin=true&viewername=11&viewertoken=11
+        注意: 请详细比对上述URL示例
+        '''
+        login_type = constants.ClassRoomAutoLoginType(login_type)
+        if login_type in (
+                constants.ClassRoomAutoLoginType.record,
+                constants.ClassRoomAutoLoginType.audience,
+            ):
+            return '{}&autoLogin=true&viewername={}&viewertoken={}'.format(url, name, token)
+        return '{}&autoLogin=true&username={}&password={}'.format(url, name, token)
