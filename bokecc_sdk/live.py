@@ -276,7 +276,7 @@ class LiveAPI(APIMixin):
         userid    CC账户ID
         '''
         url = self.get_url('rooms/broadcasting')
-        params = {'userid': userid}
+        params = {'userid': self.userid}
         response = self.request(url, params, method='get')
         return response
 
@@ -396,14 +396,14 @@ class LiveAPI(APIMixin):
         response = self.request(url, params, method='get')
         return response
 
-    def viewtemplate_info(self, userid):
+    def viewtemplate_info(self):
         '''
         获取直播间模板信息
         http://api.csslcloud.net/api/viewtemplate/info
         userid   CC账户ID
         '''
         url = self.get_url('viewtemplate/info')
-        params = {'userid': userid}
+        params = {'userid': self.userid}
         response = self.request(url, params, method='get')
         return response
 

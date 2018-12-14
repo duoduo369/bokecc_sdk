@@ -5,7 +5,7 @@
 创建__secret.py 添加cc的APIKEY
 '''
 
-from __secret import APIKEY
+from __secret import APIKEY, USERID
 
 from bokecc_sdk import constants
 from bokecc_sdk.classroom import ClassRoomAPI
@@ -17,7 +17,7 @@ def room_chat():
     response:
     {u'data': {u'roomid': u'E3EAA8CE5B3AF7BD9C33DC5901307461'}, u'result': u'OK'}
     '''
-    classroom_api = ClassRoomAPI(APIKEY)
+    classroom_api = ClassRoomAPI(USERID, APIKEY)
     name = 'sdk测试创建云课堂群聊视频直播间免密码'
     desc = 'sdk测试创建云课堂直播间desc'
     templatetype = constants.ClassRoomTemplateType.talk.value
@@ -39,7 +39,7 @@ def room_small_classroom():
     response:
     {u'data': {u'roomid': u'E3EAA8CE5B3AF7BD9C33DC5901307461'}, u'result': u'OK'}
     '''
-    classroom_api = ClassRoomAPI(APIKEY)
+    classroom_api = ClassRoomAPI(USERID, APIKEY)
     name = 'sdk测试创建云课堂小班课直播间name免密码'
     desc = 'sdk测试创建云课堂直播间desc'
     templatetype = constants.ClassRoomTemplateType.talk.value
@@ -66,7 +66,7 @@ def update_room(roomid):
     response
     {u'data': u'', u'result': u'OK'}
     '''
-    classroom_api = ClassRoomAPI(APIKEY)
+    classroom_api = ClassRoomAPI(USERID, APIKEY)
     name = 'sdk测试修改云课堂小班课直播间'
     desc = 'sdk测试修改云课堂直播间desc'
     templatetype = constants.ClassRoomTemplateType.talk.value
@@ -90,7 +90,7 @@ def room_live_start(roomid):
     '''
     开始直播
     '''
-    classroom_api = ClassRoomAPI(APIKEY)
+    classroom_api = ClassRoomAPI(USERID, APIKEY)
     response = classroom_api.room_live_start(roomid)
     return response
 
@@ -99,7 +99,7 @@ def room_live_stop(roomid):
     '''
     结束直播
     '''
-    classroom_api = ClassRoomAPI(APIKEY)
+    classroom_api = ClassRoomAPI(USERID, APIKEY)
     response = classroom_api.room_live_stop(roomid)
     return response
 
@@ -108,7 +108,7 @@ def room_close(roomid):
     '''
     关闭直播间
     '''
-    classroom_api = ClassRoomAPI(APIKEY)
+    classroom_api = ClassRoomAPI(USERID, APIKEY)
     response = classroom_api.room_close(roomid)
     return response
 
@@ -117,7 +117,7 @@ def room_list(name=None, status=None, page=1, lines=50, roomid=None):
     '''
     获取账号下房间列表
     '''
-    classroom_api = ClassRoomAPI(APIKEY)
+    classroom_api = ClassRoomAPI(USERID, APIKEY)
     response = classroom_api.room_list(
         name=name, status=status, page=page, lines=lines, roomid=roomid
     )
@@ -128,7 +128,7 @@ def room_room_detail(roomid):
     '''
     获取房间信息
     '''
-    classroom_api = ClassRoomAPI(APIKEY)
+    classroom_api = ClassRoomAPI(USERID, APIKEY)
     response = classroom_api.room_room_detail(roomid)
     return response
 
@@ -144,7 +144,7 @@ def room_link(roomid):
       u'talker_url': u'https://class.csslcloud.net/index/talker/?roomid=C9CBAB7F53A201249C33DC5901307461&userid=BC36C6119CAB4A42'},
      u'result': u'OK'}
     '''
-    classroom_api = ClassRoomAPI(APIKEY)
+    classroom_api = ClassRoomAPI(USERID, APIKEY)
     response = classroom_api.room_link(roomid)
     return response
 
@@ -153,7 +153,7 @@ def room_set_single(roomid, status):
     '''
     获取房间信息
     '''
-    classroom_api = ClassRoomAPI(APIKEY)
+    classroom_api = ClassRoomAPI(USERID, APIKEY)
     response = classroom_api.room_set_single(roomid, status)
     return response
 
@@ -162,7 +162,7 @@ def room_user_list(roomid):
     '''
     获取当前房间人员列表
     '''
-    classroom_api = ClassRoomAPI(APIKEY)
+    classroom_api = ClassRoomAPI(USERID, APIKEY)
     response = classroom_api.room_user_list(roomid)
     return response
 
@@ -171,14 +171,14 @@ def room_live_stat(roomid):
     '''
     查询直播状态
     '''
-    classroom_api = ClassRoomAPI(APIKEY)
+    classroom_api = ClassRoomAPI(USERID, APIKEY)
     response = classroom_api.room_live_stat(roomid)
     return response
 
 
 def get_auto_login_url(roomid):
     '''获取直播间免密码登录url'''
-    classroom_api = ClassRoomAPI(APIKEY)
+    classroom_api = ClassRoomAPI(USERID, APIKEY)
     response = classroom_api.room_link(roomid)['data']
     # 教师
     presenter_login_url = response['presenter_url']
