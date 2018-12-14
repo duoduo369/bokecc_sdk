@@ -19,7 +19,7 @@ class LiveAPI(APIMixin):
     def get_api_prefix(self):
         return 'http://api.csslcloud.net/api/'
 
-    def room_create(self, userid, name, desc, templatetype, authtype,
+    def room_create(self, name, desc, templatetype, authtype,
             publisherpass, assistantpass, playpass=None, checkurl=None,
             barrage=0, foreignpublish=0, openlowdelaymode=0, showusercount=1,
             openhostmode=0, warmvideoid='', livestarttime='',
@@ -61,7 +61,7 @@ class LiveAPI(APIMixin):
         authtype = constants.LiveAuthType(authtype).value
         templatetype = constants.LiveTemplateType(templatetype).value
         params = {
-            'userid': userid, 'name': name, 'desc': desc, 'templatetype': templatetype,
+            'userid': self.userid, 'name': name, 'desc': desc, 'templatetype': templatetype,
             'authtype': authtype, 'publisherpass': publisherpass, 'assistantpass': assistantpass,
             'playpass': playpass, 'checkurl': checkurl, 'barrage': barrage,
             'foreignpublish': foreignpublish, 'openlowdelaymode': openlowdelaymode,
@@ -76,7 +76,7 @@ class LiveAPI(APIMixin):
         response = self.request(url, params, method='get')
         return response
 
-    def room_update(self, userid, roomid, name, desc, templatetype, authtype,
+    def room_update(self, roomid, name, desc, templatetype, authtype,
             publisherpass, assistantpass, playpass=None, checkurl=None,
             barrage=0, openlowdelaymode=0, showusercount=1,
             warmvideoid='', livestarttime='', playerbackgroundhint='', manuallyrecordmode=0,
@@ -116,7 +116,7 @@ class LiveAPI(APIMixin):
         authtype = constants.LiveAuthType(authtype).value
         templatetype = constants.LiveTemplateType(templatetype).value
         params = {
-            'roomid': roomid, 'userid': userid, 'name': name, 'desc': desc, 'templatetype': templatetype,
+            'roomid': roomid, 'userid': self.userid, 'name': name, 'desc': desc, 'templatetype': templatetype,
             'authtype': authtype, 'publisherpass': publisherpass, 'assistantpass': assistantpass,
             'playpass': playpass, 'checkurl': checkurl, 'barrage': barrage,
             'openlowdelaymode': openlowdelaymode, 'showusercount': showusercount,
@@ -130,7 +130,7 @@ class LiveAPI(APIMixin):
         response = self.request(url, params, method='get')
         return response
 
-    def room_close(self, userid, roomid):
+    def room_close(self, roomid):
         '''
         关闭直播间
         过该接口将直播间关闭，接口请求地址为：
@@ -139,11 +139,11 @@ class LiveAPI(APIMixin):
         userid    CC账户ID
         '''
         url = self.get_url('room/close')
-        params = {'userid': userid, 'roomid': roomid}
+        params = {'userid': self.userid, 'roomid': roomid}
         response = self.request(url, params, method='get')
         return response
 
-    def room_info(self, userid, pagenum=50, pageindex=1):
+    def room_info(self, pagenum=50, pageindex=1):
         '''
         获取直播间列表
         通过该接口可以获取用户的直播间列表信息
@@ -153,11 +153,11 @@ class LiveAPI(APIMixin):
         pageindex   页码    可选，系统默认值为1
         '''
         url = self.get_url('room/info')
-        params = {'userid': userid, 'pagenum': pagenum, 'pageindex': pageindex}
+        params = {'userid': self.userid, 'pagenum': pagenum, 'pageindex': pageindex}
         response = self.request(url, params, method='get')
         return response
 
-    def room_search(self, userid, roomid):
+    def room_search(self, roomid):
         '''
         获取直播间信息
         通过该接口可以获取直播间的信息，接口请求地址为:
@@ -166,11 +166,11 @@ class LiveAPI(APIMixin):
         userid    CC账户ID
         '''
         url = self.get_url('room/search')
-        params = {'userid': userid, 'roomid': roomid}
+        params = {'userid': self.userid, 'roomid': roomid}
         response = self.request(url, params, method='get')
         return response
 
-    def room_code(self, userid, roomid):
+    def room_code(self, roomid):
         '''
         获取直播间代码
         通过该接口可以获取直播间的代码信息，包括观看地址信息、客户端登陆地址、
@@ -180,11 +180,11 @@ class LiveAPI(APIMixin):
         userid    CC账户ID
         '''
         url = self.get_url('room/code')
-        params = {'userid': userid, 'roomid': roomid}
+        params = {'userid': self.userid, 'roomid': roomid}
         response = self.request(url, params, method='get')
         return response
 
-    def live_info(self, userid, roomid, pagenum=50, pageindex=1, starttime='', endtime=''):
+    def live_info(self, roomid, pagenum=50, pageindex=1, starttime='', endtime=''):
         '''
         获取直播列表, 某直播间的直播列表，如果有合并视频也会在列表中
         通过该接口获取指定直播间下历史直播信息，接口请求地址为:
@@ -198,7 +198,7 @@ class LiveAPI(APIMixin):
         '''
         url = self.get_url('v2/live/info')
         params = {
-            'userid': userid, 'roomid': roomid, 'pagenum': pagenum, 'pageindex': pageindex
+            'userid': self.userid, 'roomid': roomid, 'pagenum': pagenum, 'pageindex': pageindex
         }
         if starttime or endtime:
             if not starttime and endtime:
@@ -210,7 +210,7 @@ class LiveAPI(APIMixin):
         response = self.request(url, params, method='get')
         return response
 
-    def record_info(self, userid, roomid, pagenum=50, pageindex=1, starttime='', endtime='', liveid=''):
+    def record_info(self, roomid, pagenum=50, pageindex=1, starttime='', endtime='', liveid=''):
         '''
         查询回放列表, 如果有合并视频也会在列表中
         通过该接口可以分页获取回放列表的信息，接口请求地址为：
@@ -225,7 +225,7 @@ class LiveAPI(APIMixin):
         '''
         url = self.get_url('v2/record/info')
         params = {
-            'userid': userid, 'roomid': roomid, 'pagenum': pagenum, 'pageindex': pageindex
+            'userid': self.userid, 'roomid': roomid, 'pagenum': pagenum, 'pageindex': pageindex
         }
         if starttime or endtime:
             if not starttime and endtime:
@@ -239,7 +239,7 @@ class LiveAPI(APIMixin):
         response = self.request(url, params, method='get')
         return response
 
-    def record_search(self, userid, recordid):
+    def record_search(self, recordid):
         '''
         查询回放信息
         通过该接口获取单个回放信息，接口请求地址为:
@@ -248,11 +248,11 @@ class LiveAPI(APIMixin):
         recordid    recordid
         '''
         url = self.get_url('v2/record/search')
-        params = {'userid': userid, 'recordid': recordid}
+        params = {'userid': self.userid, 'recordid': recordid}
         response = self.request(url, params, method='get')
         return response
 
-    def live_merge(self, userid, roomid, recordids):
+    def live_merge(self, roomid, recordids):
         '''
         合并回放接口, 合并需要时间，需要接回调
         通过该接口可以对同一直播间下相同模板类型的回放进行合并，接口请求地址为：
@@ -264,11 +264,11 @@ class LiveAPI(APIMixin):
         url = self.get_url('live/merge')
         if len(recordids.split(',')) > 3:
             raise exceptions.CCSDKInvalidParamException()
-        params = {'userid': userid, 'roomid': roomid, 'recordids': recordids}
+        params = {'userid': self.userid, 'roomid': roomid, 'recordids': recordids}
         response = self.request(url, params, method='get')
         return response
 
-    def rooms_broadcasting(self, userid, roomid):
+    def rooms_broadcasting(self, roomid):
         '''
         获取正在直播的直播间列表
         该接口可获取用户账号下所有正在进行直播的直播间列表，接口请求地址为:
@@ -280,7 +280,7 @@ class LiveAPI(APIMixin):
         response = self.request(url, params, method='get')
         return response
 
-    def rooms_publishing(self, userid, roomids):
+    def rooms_publishing(self, roomids):
         '''
         获取直播间直播状态
         通过该接口获取直播间的直播状态，接口请求地址为:
@@ -291,11 +291,11 @@ class LiveAPI(APIMixin):
         url = self.get_url('rooms/publishing')
         if len(roomids.split(',')) > 100:
             raise exceptions.CCSDKInvalidParamException()
-        params = {'userid': userid, 'roomids': roomids}
+        params = {'userid': self.userid, 'roomids': roomids}
         response = self.request(url, params, method='get')
         return response
 
-    def statis_connections(self, userid, roomid, starttime, endtime):
+    def statis_connections(self, roomid, starttime, endtime):
         '''
         获取直播间连接数
         通过该接口可以获取直播间的连接数统计信息，接口请求地址为:
@@ -309,13 +309,13 @@ class LiveAPI(APIMixin):
         starttime = arrow.get(starttime).format('YYYY-MM-DD HH:mm:ss')
         endtime = arrow.get(endtime).format('YYYY-MM-DD HH:mm:ss')
         params = {
-            'userid': userid, 'roomid': roomid,
+            'userid': self.userid, 'roomid': roomid,
             'starttime': starttime, 'endtime': endtime
         }
         response = self.request(url, params, method='get')
         return response
 
-    def statis_useraction(self, userid, roomid, starttime, endtime):
+    def statis_useraction(self, roomid, starttime, endtime):
         '''
         获取直播间连接数
         通过该接口可以获取直播间的连接数统计信息，接口请求地址为:
@@ -333,13 +333,13 @@ class LiveAPI(APIMixin):
         starttime = start.format('YYYY-MM-DD HH:mm:ss')
         endtime = end.format('YYYY-MM-DD HH:mm:ss')
         params = {
-            'userid': userid, 'roomid': roomid,
+            'userid': self.userid, 'roomid': roomid,
             'starttime': starttime, 'endtime': endtime
         }
         response = self.request(url, params, method='get')
         return response
 
-    def statis_userview(self, userid, liveid):
+    def statis_userview(self, liveid):
         '''
         获取观看直播的统计信息, 注意，如果live是合并类型的，cc会返回一个报错
         通过该接口可获取观看直播的统计信息，接口请求地址为:
@@ -348,11 +348,11 @@ class LiveAPI(APIMixin):
         userid  CC账户ID
         '''
         url = self.get_url('statis/userview')
-        params = {'userid': userid, 'liveid': liveid}
+        params = {'userid': self.userid, 'liveid': liveid}
         response = self.request(url, params, method='get')
         return response
 
-    def statis_replay_useraction(self, userid, recordid, pagenum=50, pageindex=1):
+    def statis_replay_useraction(self, recordid, pagenum=50, pageindex=1):
         '''
         获取单个直播回放的观看统计信息
         通过该接口可以获取单个直播观看回放的用户登录，退出行为统计。接口请求地址为:
@@ -365,11 +365,11 @@ class LiveAPI(APIMixin):
         url = self.get_url('v2/statis/replay/useraction')
         if pagenum > 1000:
             raise exceptions.CCSDKInvalidParamException()
-        params = {'userid': userid, 'recordid': recordid, 'pagenum': pagenum, 'pageindex': pageindex}
+        params = {'userid': self.userid, 'recordid': recordid, 'pagenum': pagenum, 'pageindex': pageindex}
         response = self.request(url, params, method='get')
         return response
 
-    def statis_replay(self, userid, starttime, endtime, pagenum=50, pageindex=1):
+    def statis_replay(self, starttime, endtime, pagenum=50, pageindex=1):
         '''
         获取所有直播回放的观看统计信息
         通过该接口可以获取观看直播回放的用户登录，退出行为统计。接口请求地址为：
@@ -390,7 +390,7 @@ class LiveAPI(APIMixin):
         starttime = start.format('YYYY-MM-DD HH:mm:ss')
         endtime = end.format('YYYY-MM-DD HH:mm:ss')
         params = {
-            'userid': userid, 'starttime': starttime, 'endtime': endtime,
+            'userid': self.userid, 'starttime': starttime, 'endtime': endtime,
             'pagenum': pagenum, 'pageindex': pageindex
         }
         response = self.request(url, params, method='get')

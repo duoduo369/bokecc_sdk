@@ -18,7 +18,7 @@ class ClassRoomAPI(APIMixin):
     def get_api_prefix(self):
         return 'https://ccapi.csslcloud.net/api/'
 
-    def room_create(self, userid, name, room_type, templatetype, publisherpass, assist_pass,
+    def room_create(self, name, room_type, templatetype, publisherpass, assist_pass,
             audience_authtype=1, audience_pass=None, talker_authtype=1,
             talker_pass=None, inspector_authtype=1, inspector_pass=None,
             white_list=None, desc='', mergetype=2,
@@ -71,7 +71,7 @@ class ClassRoomAPI(APIMixin):
         if max_users and not max_streams:
             max_streams = max_users
         params = {
-            'userid': userid, 'name': name, 'room_type': room_type, 'publisherpass': publisherpass,
+            'userid': self.userid, 'name': name, 'room_type': room_type, 'publisherpass': publisherpass,
             'assist_pass': assist_pass, 'audience_authtype': audience_authtype,
             'audience_pass': audience_pass, 'talker_authtype': talker_authtype,
             'inspector_authtype': inspector_authtype, 'inspector_pass': inspector_pass,
@@ -94,7 +94,7 @@ class ClassRoomAPI(APIMixin):
         response = self.request(url, params, method='get')
         return response
 
-    def room_update(self, userid, live_roomid, templatetype, name, publisherpass, assist_pass,
+    def room_update(self, live_roomid, templatetype, name, publisherpass, assist_pass,
             audience_authtype=1, audience_pass=None, talker_authtype=1,
             talker_pass=None, inspector_authtype=1, inspector_pass=None,
             white_list=None, desc='', mergetype=2,
@@ -146,7 +146,7 @@ class ClassRoomAPI(APIMixin):
         if max_users and not max_streams:
             max_streams = max_users
         params = {
-            'userid': userid, 'name': name, 'live_roomid': live_roomid, 'publisherpass': publisherpass,
+            'userid': self.userid, 'name': name, 'live_roomid': live_roomid, 'publisherpass': publisherpass,
             'audience_authtype': audience_authtype,
             'audience_pass': audience_pass, 'talker_authtype': talker_authtype,
             'inspector_authtype': inspector_authtype, 'inspector_pass': inspector_pass,
@@ -167,7 +167,7 @@ class ClassRoomAPI(APIMixin):
         response = self.request(url, params, method='get')
         return response
 
-    def room_live_start(self, userid, roomid):
+    def room_live_start(self, roomid):
         '''
         开始直播
         https://ccapi.csslcloud.net/api/room/live/start
@@ -175,11 +175,11 @@ class ClassRoomAPI(APIMixin):
         roomid  字符串  直播间ID    必须
         '''
         url = self.get_url('room/live/start')
-        params = {'userid': userid, 'roomid': roomid}
+        params = {'userid': self.userid, 'roomid': roomid}
         response = self.request(url, params, method='get')
         return response
 
-    def room_live_stop(self, userid, roomid):
+    def room_live_stop(self, roomid):
         '''
         结束直播
         https://ccapi.csslcloud.net/api/room/live/stop
@@ -187,11 +187,11 @@ class ClassRoomAPI(APIMixin):
         roomid  字符串  直播间ID    必须
         '''
         url = self.get_url('room/live/stop')
-        params = {'userid': userid, 'roomid': roomid}
+        params = {'userid': self.userid, 'roomid': roomid}
         response = self.request(url, params, method='get')
         return response
 
-    def room_close(self, userid, roomid):
+    def room_close(self, roomid):
         '''
         关闭直播间
         过该接口将直播间关闭，接口请求地址为：
@@ -200,11 +200,11 @@ class ClassRoomAPI(APIMixin):
         userid    CC账户ID
         '''
         url = self.get_url('room/close')
-        params = {'userid': userid, 'roomid': roomid}
+        params = {'userid': self.userid, 'roomid': roomid}
         response = self.request(url, params, method='get')
         return response
 
-    def room_list(self, userid, name=None, status=None, page=1, lines=50, roomid=None):
+    def room_list(self, name=None, status=None, page=1, lines=50, roomid=None):
         '''
         获取账号下房间列表
         获取账号下房间列表 可以指定name status roomid为过滤参数
@@ -217,7 +217,7 @@ class ClassRoomAPI(APIMixin):
         roomid  字符串  房间ID  可选
         '''
         url = self.get_url('room/list')
-        params = {'userid': userid, 'page': page, 'lines': lines}
+        params = {'userid': self.userid, 'page': page, 'lines': lines}
         if name:
             params['name'] = name
         if status:
@@ -227,7 +227,7 @@ class ClassRoomAPI(APIMixin):
         response = self.request(url, params, method='get')
         return response
 
-    def room_room_detail(self, userid, roomid):
+    def room_room_detail(self, roomid):
         '''
         获取房间信息
         https://ccapi.csslcloud.net/api/room/room_detail
@@ -235,12 +235,12 @@ class ClassRoomAPI(APIMixin):
         roomid  字符串  房间ID  必须
         '''
         url = self.get_url('room/room_detail')
-        params = {'userid': userid, 'roomid': roomid}
+        params = {'userid': self.userid, 'roomid': roomid}
         response = self.request(url, params, method='get')
         return response
 
 
-    def room_link(self, userid, roomid):
+    def room_link(self, roomid):
         '''
         获取房间登录链接
         https://ccapi.csslcloud.net/api/v1/room/link
@@ -248,11 +248,11 @@ class ClassRoomAPI(APIMixin):
         roomid  字符串  房间ID  必须
         '''
         url = self.get_url('v1/room/link')
-        params = {'userid': userid, 'roomid': roomid}
+        params = {'userid': self.userid, 'roomid': roomid}
         response = self.request(url, params, method='get')
         return response
 
-    def room_set_single(self, userid, roomid, status):
+    def room_set_single(self, roomid, status):
         '''
         切换合流布局模式
         https://ccapi.csslcloud.net/api/room/set_single
@@ -261,11 +261,11 @@ class ClassRoomAPI(APIMixin):
         status  整型    状态 1:主视角 2:平铺    必须
         '''
         url = self.get_url('room/set_single')
-        params = {'userid': userid, 'roomid': roomid, 'status': status}
+        params = {'userid': self.userid, 'roomid': roomid, 'status': status}
         response = self.request(url, params, method='get')
         return response
 
-    def room_user_list(self, userid, roomid):
+    def room_user_list(self, roomid):
         '''
         获取当前房间人员列表
         https://ccapi.csslcloud.net/api/v1/room/user/list
@@ -273,18 +273,18 @@ class ClassRoomAPI(APIMixin):
         roomid  字符串  房间ID  必须
         '''
         url = self.get_url('v1/room/user/list')
-        params = {'userid': userid, 'roomid': roomid}
+        params = {'userid': self.userid, 'roomid': roomid}
         response = self.request(url, params, method='get')
         return response
 
-    def room_live_stat(self, userid, roomid):
+    def room_live_stat(self, roomid):
         '''
         查询直播状态
         https://ccapi.csslcloud.net/api/v1/room/live/stat
         roomid  字符串  房间ID  必须
         '''
         url = self.get_url('v1/room/live/stat')
-        params = {'userid': userid, 'roomid': roomid}
+        params = {'userid': self.userid, 'roomid': roomid}
         response = self.request(url, params, method='get')
         return response
 

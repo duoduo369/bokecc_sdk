@@ -2,9 +2,9 @@
 '''
 直播 example
 
-创建__secret.py 添加cc的USERID, APIKEY
+创建__secret.py 添加cc的APIKEY
 '''
-from __secret import USERID, APIKEY
+from __secret import APIKEY
 
 from bokecc_sdk import constants
 from bokecc_sdk.live import LiveAPI
@@ -20,7 +20,6 @@ def room_create_nopassword():
      u'publishUrl': u'rtmp://119.23.200.43/origin/C3A806559DE44DB19C33DC5901307461?token=DVD2sV74'}}
     '''
     live_api = LiveAPI(APIKEY)
-    userid = USERID
     name = 'sdk测试创建直播间name免密码'
     desc = 'sdk测试创建直播间desc'
     templatetype = constants.LiveTemplateType.video_chat.value
@@ -29,7 +28,7 @@ def room_create_nopassword():
     publisherpass = 'tcctest'
     assistantpass = 'acctest'
     response = live_api.room_create(
-        userid, name, desc, templatetype, authtype, publisherpass, assistantpass
+        name, desc, templatetype, authtype, publisherpass, assistantpass
     )
     return response
 
@@ -41,7 +40,6 @@ def room_create_password():
     {u'result': u'OK', u'room': {u'atlasRoomId': u'', u'id': u'F620B27CA1FEFA269C33DC5901307461'}}
     '''
     live_api = LiveAPI(APIKEY)
-    userid = USERID
     name = 'sdk测试创建直播间name密码'
     desc = 'sdk测试创建直播间desc'
     templatetype = constants.LiveTemplateType.video_doc_chat_qa.value
@@ -49,7 +47,7 @@ def room_create_password():
     publisherpass = 'tcctest'
     assistantpass = 'acctest'
     response = live_api.room_create(
-        userid, name, desc, templatetype, authtype, publisherpass, assistantpass
+        name, desc, templatetype, authtype, publisherpass, assistantpass
     )
     return response
 
@@ -60,7 +58,6 @@ def room_update(roomid):
     {u'result': u'OK'}
     '''
     live_api = LiveAPI(APIKEY)
-    userid = USERID
     name = 'sdk测试修改创建直播间name 无密码'
     desc = 'sdk测试创建直播间desc111'
     templatetype = constants.LiveTemplateType.video_doc_chat_qa.value
@@ -68,7 +65,7 @@ def room_update(roomid):
     publisherpass = 'tcctest1'
     assistantpass = 'acctest1'
     response = live_api.room_update(
-        userid, roomid, name, desc, templatetype, authtype, publisherpass, assistantpass
+        roomid, name, desc, templatetype, authtype, publisherpass, assistantpass
     )
     return response
 
@@ -80,8 +77,7 @@ def room_close(roomid):
     {u'result': u'OK'}
     '''
     live_api = LiveAPI(APIKEY)
-    userid = USERID
-    response = live_api.room_close(userid, roomid)
+    response = live_api.room_close(roomid)
     return response
 
 
@@ -132,8 +128,7 @@ def room_info(pagenum=50, pageindex=1):
        u'whiteListId': u'9C33DC5901307461'}]}
     '''
     live_api = LiveAPI(APIKEY)
-    userid = USERID
-    response = live_api.room_info(userid, pagenum, pageindex)
+    response = live_api.room_info(pagenum, pageindex)
     return response
 
 
@@ -188,8 +183,7 @@ def room_search(roomid):
       u'whiteListId': u'9C33DC5901307461'}}
     '''
     live_api = LiveAPI(APIKEY)
-    userid = USERID
-    response = live_api.room_search(userid, roomid)
+    response = live_api.room_search(roomid)
     return response
 
 def room_code(roomid):
@@ -204,8 +198,7 @@ def room_code(roomid):
      u'viewUrl': u'https://view.csslcloud.net/api/view/index?roomid=780DEE01F06950939C33DC5901307461&userid=BC36C6119CAB4A42'}
     '''
     live_api = LiveAPI(APIKEY)
-    userid = USERID
-    response = live_api.room_code(userid, roomid)
+    response = live_api.room_code(roomid)
     return response
 
 
@@ -224,8 +217,7 @@ def live_info(roomid, pagenum=50, pageindex=1, starttime='', endtime=''):
      u'result': u'OK'}
     '''
     live_api = LiveAPI(APIKEY)
-    userid = USERID
-    response = live_api.live_info(userid, roomid, pagenum=pagenum, pageindex=pageindex)
+    response = live_api.live_info(roomid, pagenum=pagenum, pageindex=pageindex)
     return response
 
 
@@ -250,8 +242,7 @@ def record_info(roomid, pagenum=50, pageindex=1, starttime='', endtime=''):
      u'result': u'OK'}
     '''
     live_api = LiveAPI(APIKEY)
-    userid = USERID
-    response = live_api.record_info(userid, roomid, pagenum=pagenum, pageindex=pageindex)
+    response = live_api.record_info(roomid, pagenum=pagenum, pageindex=pageindex)
     return response
 
 
@@ -275,8 +266,7 @@ def record_search(recordid):
      u'result': u'OK'}
     '''
     live_api = LiveAPI(APIKEY)
-    userid = USERID
-    response = live_api.record_search(userid, recordid)
+    response = live_api.record_search(recordid)
     return response
 
 
@@ -287,8 +277,7 @@ def live_merge(roomid, recordids):
     {u'recordid': u'4068F1FEFC947A6F', u'result': u'OK'}
     '''
     live_api = LiveAPI(APIKEY)
-    userid = USERID
-    response = live_api.live_merge(userid, roomid, recordids)
+    response = live_api.live_merge(roomid, recordids)
     return response
 
 
@@ -302,8 +291,7 @@ def rooms_broadcasting(roomid):
        u'startTime': u'2018-12-07 12:00:55'}]}
     '''
     live_api = LiveAPI(APIKEY)
-    userid = USERID
-    response = live_api.rooms_broadcasting(userid, roomid)
+    response = live_api.rooms_broadcasting(roomid)
     return response
 
 
@@ -316,8 +304,7 @@ def rooms_publishing(roomids):
        u'roomId': u'06B80689C1653A459C33DC5901307461'}]}
     '''
     live_api = LiveAPI(APIKEY)
-    userid = USERID
-    response = live_api.rooms_publishing(userid, roomids)
+    response = live_api.rooms_publishing(roomids)
     return response
 
 
@@ -347,8 +334,7 @@ def statis_connections(roomid, starttime, endtime):
      u'roomId': u'06B80689C1653A459C33DC5901307461'}
     '''
     live_api = LiveAPI(APIKEY)
-    userid = USERID
-    response = live_api.statis_connections(userid, roomid, starttime, endtime)
+    response = live_api.statis_connections(roomid, starttime, endtime)
     return response
 
 
@@ -368,8 +354,7 @@ def statis_useraction(roomid, starttime, endtime):
        u'userPlatform': 0}]}
     '''
     live_api = LiveAPI(APIKEY)
-    userid = USERID
-    response = live_api.statis_useraction(userid, roomid, starttime, endtime)
+    response = live_api.statis_useraction(roomid, starttime, endtime)
     return response
 
 def statis_userview(liveid):
@@ -380,8 +365,7 @@ def statis_userview(liveid):
     {u'liveId': u'D95AD073F20E70FA', u'result': u'OK', u'status': 0}
     '''
     live_api = LiveAPI(APIKEY)
-    userid = USERID
-    response = live_api.statis_userview(userid, liveid)
+    response = live_api.statis_userview(liveid)
     return response
 
 
@@ -401,8 +385,7 @@ def statis_replay_useraction(recordid, pagenum=50, pageindex=1):
 
     '''
     live_api = LiveAPI(APIKEY)
-    userid = USERID
-    response = live_api.statis_replay_useraction(userid, recordid, pagenum=pagenum, pageindex=pageindex)
+    response = live_api.statis_replay_useraction(recordid, pagenum=pagenum, pageindex=pageindex)
     return response
 
 
@@ -422,16 +405,14 @@ def statis_replay(starttime, endtime, pagenum=50, pageindex=1):
        u'userName': u'182.46.3.164, 47.110.176.193'}]}
     '''
     live_api = LiveAPI(APIKEY)
-    userid = USERID
-    response = live_api.statis_replay(userid, starttime, endtime, pagenum=pagenum, pageindex=pageindex)
+    response = live_api.statis_replay(starttime, endtime, pagenum=pagenum, pageindex=pageindex)
     return response
 
 
 def get_auto_login_url(roomid):
     '''获取直播间免密码登录url'''
     live_api = LiveAPI(APIKEY)
-    userid = USERID
-    response = live_api.room_code(userid, roomid)
+    response = live_api.room_code(roomid)
     assistant_login_url = response['assistantLoginUrl']
     client_login_url = response['clientLoginUrl']
     view_url = response['viewUrl']
@@ -461,6 +442,5 @@ def viewtemplate_info():
     视频，问答 6
     '''
     live_api = LiveAPI(APIKEY)
-    userid = USERID
     response = live_api.viewtemplate_info(userid)
     return response

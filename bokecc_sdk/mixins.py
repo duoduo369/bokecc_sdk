@@ -8,7 +8,8 @@ from .utils import THQS
 
 class APIMixin(object):
 
-    def __init__(self, api_key):
+    def __init__(self, userid, api_key):
+        self.userid = userid
         self.api_key = api_key
         self.thqs = THQS(api_key)
 
