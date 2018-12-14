@@ -29,7 +29,7 @@ def room_chat():
     assist_pass = 'acctest'
     response = classroom_api.room_create(
         userid, name, room_type, templatetype, publisherpass, assist_pass,
-        max_users=max_users, max_streams=max_streams, desc=desc,
+        max_users=max_users, max_streams=max_streams, desc=desc, assist_switch=1
     )
     return response
 
@@ -57,6 +57,7 @@ def room_small_classroom():
         userid, name, room_type, templatetype, publisherpass, assist_pass,
         audience_pass=audience_pass, talker_pass=talker_pass,
         inspector_pass=inspector_pass, max_users=max_users, max_streams=max_streams, desc=desc,
+        assist_switch=1
     )
     return response
 

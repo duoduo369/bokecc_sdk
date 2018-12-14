@@ -10,16 +10,16 @@ version = __import__(PACKAGE_PATH).__version__
 
 SHORT_DESCRIPTION = '''SDK for bokecc.'''
 
-LONG_DESCRIPTION = ''''''
 
 def long_description():
-    """Return long description from README.md if it's present
-    because it doesn't get installed."""
-    try:
-        return open(join(dirname(__file__), 'README.md')).read()
-    except IOError:
-        return LONG_DESCRIPTION
+    return open(join(dirname(__file__), 'README.md')).read()
 
+
+def read_requirements(filename):
+    with open(filename, 'r') as file:
+        return [line for line in file.readlines() if not line.startswith('-')]
+
+requirements = read_requirements('requirements.txt')
 
 setup(name=PACKAGE_NAME,
       version=version,
@@ -30,9 +30,9 @@ setup(name=PACKAGE_NAME,
       keywords='ccsdk,bokecc,bokecc sdk',
       url='https://github.com/duoduo369/bokecc_sdk',
       download_url='https://github.com/duoduo369/bokecc_sdk/archive/newest.zip',
-      packages=[''],
+      packages=[PACKAGE_PATH],
       long_description=long_description(),
-      install_requires=['requests', 'arrow'],
+      install_requires=requirements,
       classifiers=[
                    'Development Status :: 4 - Beta',
                    'Topic :: Internet',
